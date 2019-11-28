@@ -1,3 +1,4 @@
+import os
 import re
 from math import factorial
 from jinja2 import FileSystemLoader, Environment
@@ -26,8 +27,10 @@ def port(clf, test_set=None, classmap=None, **kwargs):
             'enumerate': enumerate,
         }
     }
-    loader = FileSystemLoader('.')
-    template = Environment(loader=loader).get_template('./templates/svm.jinja')
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    print(dir_path)
+    loader = FileSystemLoader(dir_path + '/templates')
+    template = Environment(loader=loader).get_template('svm.jinja')
     code = template.render(template_data)
     code = re.sub(r'\n\s*\n', '\n', code)
 
