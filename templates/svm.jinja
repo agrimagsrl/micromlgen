@@ -1,0 +1,25 @@
+#pragma once
+
+{% include 'templates/kernel_function.jinja' %}
+
+/**
+ * Predict class for features vector
+ */
+int predict(double *x) {
+    double kernels[{{ VECTORS_COUNT }}] = { 0 };
+    double decisions[{{ DECISIONS_COUNT }}] = { 0 };
+    int votes[{{ CLASSES_COUNT }}] = { 0 };
+
+    {% include 'templates/compute_kernels.jinja' %}
+
+    {% if CLASSES_COUNT == 2 %}
+        {% include 'templates/binary_classification.jinja' %}
+    {% else %}
+        {% include 'templates/compute_decisions.jinja' %}
+        {% include 'templates/compute_votes.jinja' %}
+        {% include 'templates/compute_class.jinja' %}
+    {% endif %}
+}
+
+{% include 'templates/self_test.jinja' %}
+{% include 'templates/classmap.jinja' %}

@@ -1,0 +1,6 @@
+double decision = 0;
+
+decision = decision - ({% for i in range(0, n_support[0]) %} + kernels[{{ i }}] * {{ coefs[0][i] }} {% endfor %});
+decision = decision - ({% for i in range(n_support[0], n_support[0] + n_support[1]) %} + kernels[{{ i }}] * {{ coefs[0][i] }} {% endfor %});
+
+return decision > 0 ? 0 : 1;

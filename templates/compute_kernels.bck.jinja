@@ -1,0 +1,10 @@
+{% for i, v in F.enumerate(support_v) %}
+    {% for j in range(0, FEATURES_DIM) %}
+        chunkedSupportVectors[{{ i % CHUNK_SIZE }}][{{ j }}] = {{ v[j] }};
+    {% endfor %}
+
+    {% if (i + 1) % CHUNK_SIZE == 0 %}
+        compute_kernels(kernels, {{ i // CHUNK_SIZE * CHUNK_SIZE }}, x, chunkedSupportVectors);
+    {% endif %}
+
+{% endfor %}

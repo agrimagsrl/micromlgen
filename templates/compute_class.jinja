@@ -1,0 +1,11 @@
+        int classVal = -1;
+        int classIdx = -1;
+
+        for (int i = 0; i < {{ CLASSES_COUNT }}; i++) {
+            if (votes[i] > classVal) {
+                classVal = votes[i];
+                classIdx = i;
+            }
+        }
+
+        return classIdx;

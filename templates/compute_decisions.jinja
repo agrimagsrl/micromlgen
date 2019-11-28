@@ -1,0 +1,32 @@
+{% set helpers = {'ii': 0} %}
+
+{% for i in range(0, CLASSES_COUNT) %}
+    {% for j in range(i + 1, CLASSES_COUNT) %}
+        {% set start_i = n_support[:i].sum() %}
+        {% set start_j = n_support[:j].sum() %}
+        decisions[{{ helpers.ii }}] = {{ intercepts[helpers.ii] }}
+        {% for k in range(start_i, start_i + n_support[i]) %}
+            {% with coef=coefs[j-1][k] %}
+                {% if coef == 1 %}
+                    + kernels[{{ k }}]
+                {% elif coef == -1 %}
+                    - kernels[{{ k }}]
+                {% elif coef %}
+                    + kernels[{{ k }}] * {{ coef }}
+                {% endif %}
+            {% endwith %}
+        {% endfor %}
+        {% for k in range(start_j, start_j + n_support[j]) %}
+            {% with coef=coefs[i][k] %}
+                {% if coef == 1 %}
+                    + kernels[{{ k }}]
+                {% elif coef == -1 %}
+                    - kernels[{{ k }}]
+                {% elif coef %}
+                    + kernels[{{ k }}] * {{ coef }}
+                {% endif %}
+            {% endwith %}
+        {% endfor %};
+        {% if helpers.update({'ii': helpers.ii + 1}) %}{% endif %}
+    {% endfor %}
+{% endfor %}

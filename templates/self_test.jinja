@@ -1,0 +1,37 @@
+{% if X is not none %}
+
+/**
+ * Test the classifier performances on the test set
+ */
+void self_test() {
+    int correct = 0;
+    double X[{{ X|length }}][{{ FEATURES_DIM }}] = {
+       {% for x in X %}
+            {% if loop.index > 1 %},{% endif %} { {% for xi in x %}{% if loop.index > 1 %},{% endif %} {{ xi }} {% endfor %} }
+       {% endfor %}
+    };
+
+    int y[{{ X|length }}] = { {% for yi in y %}{% if loop.index > 1 %},{% endif %} {{ yi }} {% endfor %} };
+
+    for (int i = 0; i < {{ X|length }}; i++) {
+        int predicted = predict(X[i]);
+
+        Serial.print('#');
+        Serial.print(i);
+        Serial.print("\t Expected ");
+        Serial.print(y[i]);
+        Serial.print("\tGot ");
+        Serial.print(predicted);
+        Serial.print('\t');
+        Serial.print(predicted == y[i] ? "OK\n" : "ERR\n");
+
+        correct += (predicted == y[i]) ? 1 : 0;
+    }
+
+    Serial.print("Run {{ X|length }} predictions. ");
+    Serial.print(correct);
+    Serial.print(" were OK (");
+    Serial.print(100 * correct / {{ X|length }});
+    Serial.print("%)");
+}
+{% endif %}

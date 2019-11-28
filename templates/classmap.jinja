@@ -1,0 +1,16 @@
+{% if classmap is not none %}
+
+/**
+ * Convert class idx to readable name
+ */
+const char* classIdxToName(uint8_t classIdx) {
+    switch (classIdx) {
+        {% for idx, name in classmap.items() %}
+            case {{ idx }}:
+                return "{{ name }}";
+        {% endfor %}
+        default:
+            return "UNKNOWN";
+    }
+}
+{% endif %}
