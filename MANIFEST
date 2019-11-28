@@ -4,3 +4,13 @@ setup.py
 micromlgen/__init__.py
 micromlgen/micromlgen.py
 micromlgen/micromlgen_test.py
+micromlgen/templates/binary_classification.jinja
+micromlgen/templates/classmap.jinja
+micromlgen/templates/compute_class.jinja
+micromlgen/templates/compute_decisions.jinja
+micromlgen/templates/compute_kernels.bck.jinja
+micromlgen/templates/compute_kernels.jinja
+micromlgen/templates/compute_votes.jinja
+micromlgen/templates/kernel_function.jinja
+micromlgen/templates/self_test.jinja
+micromlgen/templates/svm.jinja

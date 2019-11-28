@@ -27,7 +27,7 @@ def port(clf, test_set=None, classmap=None, **kwargs):
         }
     }
     loader = FileSystemLoader('.')
-    template = Environment(loader=loader).get_template('templates/svm.jinja')
+    template = Environment(loader=loader).get_template('./templates/svm.jinja')
     code = template.render(template_data)
     code = re.sub(r'\n\s*\n', '\n', code)
 
