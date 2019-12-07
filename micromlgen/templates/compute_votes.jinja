@@ -1,0 +1,8 @@
+{% set helpers = {'ii': 0} %}
+
+{% for i in range(0, CLASSES_COUNT) %}
+  {% for j in range(i + 1, CLASSES_COUNT) %}
+        votes[decisions[{{ helpers.ii }}] > 0 ? {{ i }} : {{ j }}] += 1;
+        {% if helpers.update({'ii': helpers.ii + 1}) %}{% endif %}
+   {% endfor %}
+{% endfor %}
