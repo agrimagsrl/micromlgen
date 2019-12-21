@@ -2,13 +2,13 @@ from distutils.core import setup
 setup(
   name = 'micromlgen',
   packages = ['micromlgen'],
-  version = '0.5',
+  version = '0.6',
   license='MIT',
   description = 'Generate C code for microcontrollers from Python\'s sklearn classifiers',
   author = 'Simone Salerno',
   author_email = 'web@agrimag.it',
   url = 'https://github.com/agrimagsrl/micromlgen',
-  download_url = 'https://github.com/agrimagsrl/micromlgen/archive/v_05.tar.gz',
+  download_url = 'https://github.com/agrimagsrl/micromlgen/archive/v_06.tar.gz',
   keywords = ['ML', 'microcontrollers', 'sklearn', 'machine learning'],
   install_requires=[
     'jinja2',

@@ -4,7 +4,7 @@ from math import factorial
 from jinja2 import FileSystemLoader, Environment
 
 
-def port(clf, test_set=None, classmap=None, **kwargs):
+def port(clf, test_set=None, classmap=None, platform='arduino', **kwargs):
     assert type(clf).__name__ == 'SVC', 'Only sklearn.svm.SVC is supported for now'
     support_v = clf.support_vectors_
     template_data = {
@@ -25,7 +25,8 @@ def port(clf, test_set=None, classmap=None, **kwargs):
         'classmap': classmap,
         'F': {
             'enumerate': enumerate,
-        }
+        },
+        'isAttiny': platform == 'attiny',
     }
     dir_path = os.path.dirname(os.path.realpath(__file__))
     print(dir_path)

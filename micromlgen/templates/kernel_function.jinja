@@ -2,17 +2,22 @@
  * Compute kernel between feature vector and support vector.
  * Kernel type: {{ KERNEL_TYPE }}
  */
+{% if isAttiny %}
+double compute_kernel(double x[{{ FEATURES_DIM }}], double w[{{ FEATURES_DIM }}]) {
+    double kernel = 0.0;
+{% else %}
 double compute_kernel(double x[{{ FEATURES_DIM }}], ...) {
     va_list w;
     double kernel = 0.0;
 
     va_start(w, {{ FEATURES_DIM }});
+{% endif %}
 
     for (uint16_t i = 0; i < {{ FEATURES_DIM }}; i++)
         {% if KERNEL_TYPE in ['linear', 'poly', 'sigmoid'] %}
-            kernel += x[i] * va_arg(w, double);
+            kernel += x[i] * {% if isAttiny %} w[i] {% else %} va_arg(w, double), 2) {% endif %};
         {% elif KERNEL_TYPE == 'rbf' %}
-            kernel += pow(x[i] - va_arg(w, double), 2);
+            kernel += pow(x[i] - {% if isAttiny %} w[i] {% else %} va_arg(w, double), 2) {% endif %};
         {% else %}
             #error "UNKNOWN KERNEL {{ kernel }}";
         {% endif %}

@@ -3,7 +3,6 @@ setup.cfg
 setup.py
 micromlgen/__init__.py
 micromlgen/micromlgen.py
-micromlgen/micromlgen_test.py
 micromlgen/templates/binary_classification.jinja
 micromlgen/templates/classmap.jinja
 micromlgen/templates/compute_class.jinja
