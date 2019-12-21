@@ -18,11 +18,11 @@ double compute_kernel(double x[{{ FEATURES_DIM }}], ...) {
         {% endif %}
 
     {% if KERNEL_TYPE == 'poly' %}
-        kernel = pow((KERNEL_GAMMA * kernel) + KERNEL_COEF, KERNEL_DEGREE);
+        kernel = pow(({{ KERNEL_GAMMA }} * kernel) + {{ KERNEL_COEF }}, {{ KERNEL_DEGREE }});
     {% elif KERNEL_TYPE == 'rbf' %}
         kernel = exp(-{{ KERNEL_GAMMA }} * kernel);
     {% elif KERNEL_TYPE == 'sigmoid' %}
-        kernel = sigmoid((KERNEL_GAMMA * kernel) + KERNEL_COEF);
+        kernel = sigmoid(({{ KERNEL_GAMMA }} * kernel) + {{ KERNEL_COEF }});
     {% endif %}
 
     return kernel;
