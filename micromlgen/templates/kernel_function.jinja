@@ -3,7 +3,7 @@
  * Kernel type: {{ KERNEL_TYPE }}
  */
 {% if isAttiny %}
-double compute_kernel(double x[{{ FEATURES_DIM }}], double w[{{ FEATURES_DIM }}]) {
+double compute_kernel(double x[{{ FEATURES_DIM }}], float w[{{ FEATURES_DIM }}]) {
     double kernel = 0.0;
 {% else %}
 double compute_kernel(double x[{{ FEATURES_DIM }}], ...) {
@@ -15,9 +15,9 @@ double compute_kernel(double x[{{ FEATURES_DIM }}], ...) {
 
     for (uint16_t i = 0; i < {{ FEATURES_DIM }}; i++)
         {% if KERNEL_TYPE in ['linear', 'poly', 'sigmoid'] %}
-            kernel += x[i] * {% if isAttiny %} w[i] {% else %} va_arg(w, double), 2) {% endif %};
+            kernel += x[i] * {% if isAttiny %} w[i] {% else %} va_arg(w, double) {% endif %};
         {% elif KERNEL_TYPE == 'rbf' %}
-            kernel += pow(x[i] - {% if isAttiny %} w[i] {% else %} va_arg(w, double), 2) {% endif %};
+            kernel += pow(x[i] - {% if isAttiny %} w[i] {% else %} va_arg(w, double) {% endif %}, 2);
         {% else %}
             #error "UNKNOWN KERNEL {{ kernel }}";
         {% endif %}

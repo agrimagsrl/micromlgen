@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# user agrimag
+
 #git push origin master -f
 rm -rf dist/*
 python setup.py sdist
