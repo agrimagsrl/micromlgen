@@ -1,0 +1,62 @@
+{% if X_test is not none %}
+
+/**
+ *
+ */
+bool vector_equals(double actual[{{ X_DIM }}], double expected[{{ PCA_DIM }}], double tolerance) {
+    for (uint16_t i = 0; i < {{ PCA_DIM }}; i++)
+        if (abs(actual[i] - expected[i]) > tolerance)
+            return false;
+
+    return true;
+}
+
+/**
+ * Test the pca reduction
+ */
+void pca_self_test() {
+    uint16_t correct = 0;
+
+    double X[{{ X_test|length }}][{{ X_DIM }}] = {
+       {% for x in X_test %}
+            {% if loop.index > 1 %},{% endif %} { {% for xi in x %}{% if loop.index > 1 %},{% endif %} {{ xi }} {% endfor %} }
+       {% endfor %}
+    };
+
+    double y[{{ y_test|length }}][{{ PCA_DIM }}] = {
+       {% for y in y_test %}
+            {% if loop.index > 1 %},{% endif %} { {% for yi in y %}{% if loop.index > 1 %},{% endif %} {{ yi }} {% endfor %} }
+       {% endfor %}
+    };
+
+    for (int i = 0; i < {{ X_test|length }}; i++) {
+        pca(X[i]);
+
+        bool equals = vector_equals(X[i], y[i], {{ TEST_TOLERANCE }});
+
+        Serial.print('#');
+        Serial.print(i);
+        Serial.print("\tStatus\t");
+        Serial.print(equals ? "OK" : "ERR");
+        Serial.println();
+
+        correct += equals ? 1 : 0;
+    }
+
+    Serial.print("Run {{ X_test|length }} predictions. ");
+    Serial.print(correct);
+    Serial.print(" were OK (");
+    Serial.print(100 * correct / {{ X_test|length }});
+    Serial.print("%)");
+}
+
+
+void setup() {
+    Serial.begin(115200);
+    pca_self_test();
+}
+
+void loop() {
+}
+
+{% endif %}

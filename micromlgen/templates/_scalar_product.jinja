@@ -1,0 +1,14 @@
+/**
+ * Scalar product of vectors
+ */
+double scalar_product(double *x, const int length, ...) {
+    va_list w;
+    double product = 0.0;
+
+    va_start(w, length);
+
+    for (uint16_t i = 0; i < length; i++)
+        product += x[i] * va_arg(w, double);
+
+    return product;
+}

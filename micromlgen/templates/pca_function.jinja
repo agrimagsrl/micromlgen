@@ -1,0 +1,23 @@
+double scalar_product(double x[{{ ORIGINAL_FEATURES_DIM }}], ...) {
+    va_list w;
+    double pca = 0.0;
+    va_start(w, {{ ORIGINAL_FEATURES_DIM }});
+    for (uint16_t i = 0; i < {{ ORIGINAL_FEATURES_DIM }}; i++)
+        pca += x[i] * va_arg(w, double);
+    return pca;
+}
+
+/**
+ * This one overrides the original vector
+ */
+void apply_pca(double x[{{ ORIGINAL_FEATURES_DIM }}]) {
+    double u[{{ FEATURES_DIM }}];
+
+    {% for components in pca %}
+    u[{{ loop.index - 1 }}] = scalar_product(x, {% for c in components %} {% if loop.index > 1 %}, {% endif %} {{ c }} {% endfor %});
+    {% endfor %}
+
+    {% for components in pca %}
+    x[{{ loop.index - 1 }}] = u[{{ loop.index - 1 }}];
+    {% endfor %}
+}

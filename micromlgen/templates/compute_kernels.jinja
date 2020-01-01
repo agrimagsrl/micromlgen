@@ -4,9 +4,9 @@
 
 {% for i, w in F.enumerate(support_v) %}
     {% if isAttiny %}
-        {% for j, wj in F.enumerate(w) %} w[{{ j }}] = {{ wj }}; {% endfor %}
+        {% for j, wj in F.enumerate(w) %} w[{{ j }}] = {{ F.round(wj, 9) }}; {% endfor %}
         kernels[{{ i }}] = compute_kernel(x, w);
     {% else %}
-        kernels[{{ i }}] = compute_kernel(x, {% for j, wj in F.enumerate(w) %} {% if j > 0 %},{% endif %} {{ wj }} {% endfor %});
+        kernels[{{ i }}] = compute_kernel(x, {% for j, wj in F.enumerate(w) %} {% if j > 0 %},{% endif %} {{ F.round(wj, 9) }} {% endfor %});
     {% endif %}
 {% endfor %}

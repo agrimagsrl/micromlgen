@@ -1,5 +1,7 @@
 #pragma once
 
+{{ pca_code }}
+
 {% include 'kernel_function.jinja' %}
 
 /**
@@ -9,6 +11,11 @@ int predict(double *x) {
     double kernels[{{ VECTORS_COUNT }}] = { 0 };
     double decisions[{{ DECISIONS_COUNT }}] = { 0 };
     int votes[{{ CLASSES_COUNT }}] = { 0 };
+
+    {% if pca_code %}
+    pca(x);
+    {% endif %}
+
 
     {% include 'compute_kernels.jinja' %}
 

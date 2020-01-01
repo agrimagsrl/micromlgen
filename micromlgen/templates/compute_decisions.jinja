@@ -4,7 +4,7 @@
     {% for j in range(i + 1, CLASSES_COUNT) %}
         {% set start_i = n_support[:i].sum() %}
         {% set start_j = n_support[:j].sum() %}
-        decisions[{{ helpers.ii }}] = {{ intercepts[helpers.ii] }}
+        decisions[{{ helpers.ii }}] = {{ F.round(intercepts[helpers.ii], 9) }}
         {% for k in range(start_i, start_i + n_support[i]) %}
             {% with coef=coefs[j-1][k] %}
                 {% if coef == 1 %}
@@ -12,7 +12,7 @@
                 {% elif coef == -1 %}
                     - kernels[{{ k }}]
                 {% elif coef %}
-                    + kernels[{{ k }}] * {{ coef }}
+                    + kernels[{{ k }}] * {{ F.round(coef, 9) }}
                 {% endif %}
             {% endwith %}
         {% endfor %}
@@ -23,7 +23,7 @@
                 {% elif coef == -1 %}
                     - kernels[{{ k }}]
                 {% elif coef %}
-                    + kernels[{{ k }}] * {{ coef }}
+                    + kernels[{{ k }}] * {{ F.round(coef, 9) }}
                 {% endif %}
             {% endwith %}
         {% endfor %};

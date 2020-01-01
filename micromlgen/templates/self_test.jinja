@@ -5,7 +5,7 @@
  */
 void self_test() {
     int correct = 0;
-    double X[{{ X|length }}][{{ FEATURES_DIM }}] = {
+    double X[{{ X|length }}][{{ ORIGINAL_FEATURES_DIM }}] = {
        {% for x in X %}
             {% if loop.index > 1 %},{% endif %} { {% for xi in x %}{% if loop.index > 1 %},{% endif %} {{ xi }} {% endfor %} }
        {% endfor %}
